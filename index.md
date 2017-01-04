@@ -1,37 +1,58 @@
-## Welcome to GitHub Pages
 
-You can use the [editor on GitHub](https://github.com/amandaellen/conversor_numromano/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/amandaellen/conversor_numromano/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+public class NumerosRomanos {
+	
+	char romanos[] = {'I','V','X','L','C','D','M'};
+	int numeros[] = {1,5,10,50,100,500,1000};	
+	int valorFinal;		
+	
+	int ConverterNumero(String valor){		
+		
+		int valorFinal = 0;
+		char romano[] = valor.toCharArray();
+		int num = 0, num2 = 0, num3 = 0;
+		
+		
+		for (int x=0; x < romano.length; x++){
+			for (int y=0; y <= 6; y++){				
+				if (romanos[y] == romano[x]){		
+					
+					if (romano.length <= 2){
+						if (num == 0){						
+							num = numeros[y];
+							valorFinal = num;						
+						}else if (num < numeros[y]){						
+							valorFinal = numeros[y] - num;						
+						}else if (num >= numeros[y]){						
+							valorFinal = valorFinal + numeros[y];
+						}
+					}else{
+						if (num == 0){						
+							num = numeros[y];
+							valorFinal = num;						
+						}else if (num2 == 0){								
+							if (numeros[y] <= num){
+								num2 = numeros[y];					
+							}							
+						}else if(num3 == 0){
+							num3 = numeros[y];
+							if(romano[x] != 'I'){	
+								if (num2 < num3){
+									valorFinal = num - num2 + num3;
+								}else{
+									valorFinal += num2 + num3;
+								}															
+							}
+							else{
+								valorFinal += num2 + num3;
+							}
+						}else{
+							valorFinal = valorFinal + numeros[y];
+						}	
+					}					
+				}				
+			}				
+		}		
+		return valorFinal;
+	}	
+}
